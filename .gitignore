@@ -1,0 +1,7 @@
+# Qiita CLI
+node_modules/
+.remote/
+credentials.json
+
+# OS
+.DS_Store
