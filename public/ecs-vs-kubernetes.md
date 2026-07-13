@@ -24,7 +24,7 @@ ignorePublish: false
 この設計思想の違いが、技術・ユースケース・障害耐性・運用・セキュリティのすべての差に効いてきます。
 
 ```mermaid
-flowchart LR
+flowchart TB
   subgraph ECS["ECS ＝ 薄いスケジューラ"]
     direction TB
     E1[アプリ] --> E2[Task / Service]
@@ -70,7 +70,7 @@ flowchart TB
     S["ECS Scheduler<br/>desired count を維持"]
   end
   subgraph DP["データプレーン"]
-    direction LR
+    direction TB
     F1["Fargate Task"]
     F2["Fargate Task"]
     EC2["EC2 起動タイプ Task"]
@@ -95,7 +95,7 @@ flowchart TB
 flowchart TB
   ING["Ingress"]
   subgraph CP["コントロールプレーン（EKS は有料 / 自前は要運用）"]
-    direction LR
+    direction TB
     API["API server"]
     ETCD[("etcd")]
     SCH["scheduler"]
@@ -209,7 +209,7 @@ spec:
 # 2. ユースケース適性
 
 ```mermaid
-flowchart LR
+flowchart TB
   subgraph ECSU["ECS が向く"]
     direction TB
     U1["AWS 全振り・移植性不要"]
@@ -255,7 +255,7 @@ sequenceDiagram
 ## マルチ AZ での分散
 
 ```mermaid
-flowchart TB
+flowchart LR
   LB["ロードバランサ"]
   subgraph AZa["AZ-a"]
     Ta["Task / Pod"]
@@ -322,7 +322,7 @@ flowchart LR
 ## アップグレードのモデルが根本的に違う
 
 ```mermaid
-flowchart LR
+flowchart TB
   subgraph ECSU["ECS"]
     EU["コントロールプレーンは AWS 任せ<br/>＝実質意識しない"]
   end
@@ -410,7 +410,7 @@ flowchart TB
 EKS on Fargate で最も効くのが **DaemonSet 非対応**です。Kubernetes ではセキュリティ/可観測性エージェント（Falco/Sysdig、各種 CNAPP のランタイムセンサー、ログ収集の Fluent Bit など）を **DaemonSet で全ノードに 1 つ配る**のが定石ですが、Fargate にはノードが無いため**この方式が使えません**。
 
 ```mermaid
-flowchart LR
+flowchart TB
   subgraph EC2N["EKS on EC2（ノードあり）"]
     direction TB
     DS["DaemonSet で<br/>ノードに 1 センサー"]
