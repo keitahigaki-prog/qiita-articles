@@ -25,19 +25,21 @@ ignorePublish: false
 
 ```mermaid
 flowchart TB
-  subgraph ECS["ECS ＝ 薄いスケジューラ"]
-    direction TB
-    E1[アプリ] --> E2[Task / Service]
-    E2 --> E3["AWS が運用する<br/>コントロールプレーン<br/>（不可視・無料）"]
-  end
-  subgraph K8S["Kubernetes ＝ 分散システム FW"]
-    direction TB
-    K1[アプリ] --> K2[Pod / Deployment]
-    K2 --> K3["自分で組む抽象レイヤー<br/>RBAC / CRD / CNI / Ingress"]
-    K3 --> K4["コントロールプレーン<br/>etcd / API / scheduler"]
-  end
+  E0["ECS ＝ 薄いスケジューラ"] --> E1["アプリ"]
+  E1 --> E2["Task / Service"]
+  E2 --> E3["AWS が運用する<br/>コントロールプレーン<br/>（不可視・無料）"]
+
+  K0["Kubernetes ＝<br/>分散システム FW"] --> K1["アプリ"]
+  K1 --> K2["Pod / Deployment"]
+  K2 --> K3["自分で組む抽象レイヤー<br/>RBAC / CRD / CNI / Ingress"]
+  K3 --> K4["コントロールプレーン<br/>etcd / API / scheduler"]
+
   classDef ecs fill:#cde2fb,stroke:#2a78d6,color:#0b0b0b;
   classDef k8s fill:#d3f2e6,stroke:#1baf7a,color:#0b0b0b;
+  classDef etitle fill:#2a78d6,stroke:#2a78d6,color:#ffffff;
+  classDef ktitle fill:#1baf7a,stroke:#199e70,color:#ffffff;
+  class E0 etitle;
+  class K0 ktitle;
   class E1,E2,E3 ecs;
   class K1,K2,K3,K4 k8s;
 ```
